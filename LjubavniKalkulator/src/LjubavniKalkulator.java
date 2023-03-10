@@ -5,10 +5,13 @@ public class LjubavniKalkulator {
 	public static void main(String[] args) {
 		
 		String prvoIme = JOptionPane.showInputDialog("Unesi svoje ime");
-		String drugoIme = JOptionPane.showInputDialog("Unesi svoje ime");
+		String drugoIme = JOptionPane.showInputDialog("Unesi ime simpatije");
 		
-		int test = RacunanjeKompaktibilnosti.izracunajKompatibilnost(prvoIme, drugoIme);
+		//TEST
+//		String prvoIme="marta";
+//		String drugoIme="manuel";
 		
-		//System.out.println(RacunanjeKompaktibilnosti.izracunajKompatibilnost(prvoIme, drugoIme));
+		RacunanjeKompaktibilnosti.izracunajKompatibilnost(prvoIme, drugoIme);
+		
 	}
 }

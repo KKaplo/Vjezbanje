@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author Karlo
+ *
+ */
+module JambTerminalAplikacija {
+}

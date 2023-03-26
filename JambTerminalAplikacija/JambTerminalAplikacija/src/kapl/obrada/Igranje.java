@@ -11,7 +11,7 @@ public class Igranje {
 
 	private List<Igra> igranje;
 	private Start start;
-    
+
 	public Igranje(Start start) {
 		super();
 		this.start = start;
@@ -29,7 +29,7 @@ public class Igranje {
 	public void izbornik() {
 		System.out.println("");
 		System.out.println("IGRA IZBORNIK");
-		System.out.println("Dostupne opcij: e");
+		System.out.println("Dostupne opcije: ");
 		System.out.println("1. Nova tablica");
 		System.out.println("2. Upute za korištenje");
 		System.out.println("3. Povratak na glavni izbornik");
@@ -43,9 +43,9 @@ public class Igranje {
 			Igra igra = new Igra();
 			izbornikZaIgru(igra);
 			break;
-			
+
 		case 2:
-			//ispisiUputeZaKoristenje();
+			// ispisiUputeZaKoristenje();
 			izbornik();
 			break;
 
@@ -61,22 +61,37 @@ public class Igranje {
 		System.out.println("ODABERI OPCIJU");
 		System.out.println("Dostupne opcije: ");
 		System.out.println("1. Novi unos polja");
-		System.out.println("2. Promjena unosa");
+		System.out.println("2. Brisanje unosa");
 		System.out.println("3. Kraj igre");
 		System.out.println("---------------------------");
-		igra=odabirIzbornikaZaIgru(igra);
+		igra = odabirIzbornikaZaIgru(igra);
 	}
 
 	private Igra odabirIzbornikaZaIgru(Igra igra) {
 		switch (Pomocno.unosBrojRaspon("Odaberi opciju: ", 1, 3)) {
 
 		case 1:
-			igra=ispunjavanjeTablice(igra);
+			igra = ispunjavanjeTablice(igra,false);
 			izbornikZaIgru(igra);
 		case 2:
-			//promjena unosa
+			igra = ispunjavanjeTablice(igra,true);
+			izbornikZaIgru(igra);
 
 		case 3:
+			Pomocno.dodavanjeZaProlazKolone(igra.getDolje());
+			Pomocno.dodavanjeZaProlazKolone(igra.getGore());
+			Pomocno.dodavanjeZaProlazKolone(igra.getSloboda());
+			Pomocno.dodavanjeZaProlazKolone(igra.getNajava());
+			Pomocno.dodavanjeZaProlazKolone(igra.getRucno());
+			int rezultat = 0;
+			rezultat = Pomocno.racunanjeRezultata(igra);
+
+			Pomocno.CLS();
+			ispisTablice(igra.getDolje(), igra.getGore(), igra.getSloboda(), igra.getNajava(), igra.getRucno());
+			System.out.println("===================================");
+			System.out.println("\tREZULTAT: " + rezultat);
+			System.out.println("===================================");
+
 			igranje.add(igra);
 			izbornik();
 			break;
@@ -85,51 +100,59 @@ public class Igranje {
 		return igra;
 	}
 
-	private Igra ispunjavanjeTablice(Igra igra) {
-//		ArrayList<String> dolje= new ArrayList<String>(Collections.nCopies(16, " "));
-//		ArrayList<String> gore= new ArrayList<String>(Collections.nCopies(16, " "));
-//		ArrayList<String> sloboda= new ArrayList<String>(Collections.nCopies(16, " "));
-//		ArrayList<String> najava= new ArrayList<String>(Collections.nCopies(16, " "));
-//		ArrayList<String> rucno= new ArrayList<String>(Collections.nCopies(16, " "));
+	private Igra ispunjavanjeTablice(Igra igra, boolean brisanje) {
 		String kolona;
 		String redak;
 		String vrijednost;
 		Pomocno.CLS();
-		ispisTablice(igra.getDolje(),igra.getGore(),igra.getSloboda(),igra.getNajava(),igra.getRucno());
-		System.out.println("Unos bacanja:\n--------------------------");
+		ispisTablice(igra.getDolje(), igra.getGore(), igra.getSloboda(), igra.getNajava(), igra.getRucno());
+		if(brisanje) {
+			System.out.println("Unosi polje za brisanje :\n--------------------------");
+		}
+		else {
+			System.out.println("Unos u polje:\n--------------------------");
+		}
 		kolona = Pomocno.unosDobreKolone();
 		redak = Pomocno.unosDobrogRetka();
+		
+		if(brisanje) {
+			vrijednost=" ";
+		}
+		else {
 		vrijednost = Pomocno.unosVrijednosti();
-
+		}
 		switch (kolona) {
 		case "D":
-			igra.setDolje(UnosURed(igra.getDolje(),redak,vrijednost));
+			igra.setDolje(UnosURed(igra.getDolje(), redak, vrijednost));
 			break;
 		case "G":
-			igra.setGore(UnosURed(igra.getGore(),redak,vrijednost));
+			igra.setGore(UnosURed(igra.getGore(), redak, vrijednost));
 			break;
 		case "S":
-			igra.setSloboda(UnosURed(igra.getSloboda(),redak,vrijednost));
+			igra.setSloboda(UnosURed(igra.getSloboda(), redak, vrijednost));
 			break;
 		case "N":
-			igra.setNajava(UnosURed(igra.getNajava(),redak,vrijednost));
+			igra.setNajava(UnosURed(igra.getNajava(), redak, vrijednost));
 			break;
 		case "R":
-			igra.setRucno(UnosURed(igra.getRucno(),redak,vrijednost));
+			igra.setRucno(UnosURed(igra.getRucno(), redak, vrijednost));
 			break;
-			
-
 
 		}
-		ispisTablice(igra.getDolje(),igra.getGore(),igra.getSloboda(),igra.getNajava(),igra.getRucno());
+		Pomocno.racunanjeZbrojaKolone(igra.getDolje());
+		Pomocno.racunanjeZbrojaKolone(igra.getGore());
+		Pomocno.racunanjeZbrojaKolone(igra.getSloboda());
+		Pomocno.racunanjeZbrojaKolone(igra.getNajava());
+		Pomocno.racunanjeZbrojaKolone(igra.getRucno());
+
+		Pomocno.CLS();
+		ispisTablice(igra.getDolje(), igra.getGore(), igra.getSloboda(), igra.getNajava(), igra.getRucno());
 
 		return igra;
 	}
 
-
-
 	private ArrayList<String> UnosURed(ArrayList<String> kolona, String redak, String vrijednost) {
-		switch(redak) {
+		switch (redak) {
 		case "1":
 			kolona.set(0, vrijednost);
 			break;
@@ -148,17 +171,17 @@ public class Igranje {
 		case "6":
 			kolona.set(5, vrijednost);
 			break;
+		// 6 ostaje za zbroj
 		case "MAX":
 			kolona.set(7, vrijednost);
 			break;
-			//6 ostaje za zbroj
 		case "MIN":
 			kolona.set(8, vrijednost);
 			break;
+		// 9 ostaje za zbroj
 		case "2P":
 			kolona.set(10, vrijednost);
 			break;
-			//9 ostaje za zbroj
 		case "SK":
 			kolona.set(11, vrijednost);
 			break;
@@ -175,32 +198,49 @@ public class Igranje {
 		return kolona;
 	}
 
-	private void ispisTablice(ArrayList<String> dolje,ArrayList<String> gore,ArrayList<String> sloboda, ArrayList<String> najava, ArrayList<String> rucno) {
-		int i=0;
+	private void ispisTablice(ArrayList<String> dolje, ArrayList<String> gore, ArrayList<String> sloboda,
+			ArrayList<String> najava, ArrayList<String> rucno) {
+		int i = 0;
 		System.out.printf("     =================================%n");
 		System.out.printf("     ||%3s  |%3s  |%3s  |%3s  |%3s  ||%n", "G", "D", "S", "N", "R");
 		System.out.printf("======================================%n");
-		System.out.printf("|| 1 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i) , gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
-		System.out.printf("|| 2 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i), sloboda.get(i),najava.get(i),rucno.get(i++));
-		System.out.printf("|| 3 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
-		System.out.printf("|| 4 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
-		System.out.printf("|| 5 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
-		System.out.printf("|| 6 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
+		System.out.printf("|| 1 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
+		System.out.printf("|| 2 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
+		System.out.printf("|| 3 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
+		System.out.printf("|| 4 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
+		System.out.printf("|| 5 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
+		System.out.printf("|| 6 || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
 		System.out.printf("--------------------------------------%n");
-		System.out.printf("||ZBR|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
+		System.out.printf("||ZBR|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
 		System.out.printf("--------------------------------------%n");
-		System.out.printf("||MAX|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
-		System.out.printf("||MIN|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
+		System.out.printf("||MAX|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
+		System.out.printf("||MIN|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
 		System.out.printf("--------------------------------------%n");
-		System.out.printf("||ZBR|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
+		System.out.printf("||ZBR|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
 		System.out.printf("--------------------------------------%n");
-		System.out.printf("||2P || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
-		System.out.printf("||SK || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
-		System.out.printf("||FUL|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
-		System.out.printf("||POK|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
-		System.out.printf("||JAM|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
+		System.out.printf("||2P || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
+		System.out.printf("||SK || %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
+		System.out.printf("||FUL|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
+		System.out.printf("||POK|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
+		System.out.printf("||JAM|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
 		System.out.printf("======================================%n");
-		System.out.printf("||ZBR|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i),gore.get(i),sloboda.get(i),najava.get(i),rucno.get(i++));
+		System.out.printf("||ZBR|| %3s | %3s | %3s | %3s | %3s ||%n", dolje.get(i), gore.get(i), sloboda.get(i),
+				najava.get(i), rucno.get(i++));
 		System.out.printf("======================================%n");
 
 	}

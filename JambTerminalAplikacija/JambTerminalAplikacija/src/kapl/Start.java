@@ -13,7 +13,7 @@ public class Start {
 
 		Pomocno.ulaz = new Scanner(System.in);
 		igraci = new Igraci(this);
-		igranje= new Igranje(this);
+		igranje = new Igranje(this);
 		pozdravnaPoruka();
 		glavniIzbornik();
 	}
@@ -32,7 +32,7 @@ public class Start {
 
 	private void odabirGlavnogIzbornika() {
 		switch (Pomocno.unosBrojRaspon("Odabrana opcija: ", 1, 4)) {
-		
+
 		case 1:
 			igranje.izbornik();
 
@@ -41,7 +41,10 @@ public class Start {
 			igraci.izbornik();
 
 		case 4:
-			break;
+			System.out.println("---------------------------");
+			System.out.println("\tDoviđenja!");
+			System.out.println("---------------------------");
+			System.exit(0);
 		}
 
 	}
@@ -53,9 +56,6 @@ public class Start {
 
 	public static void main(String[] args) {
 		new Start();
-		System.out.println("Doviđenja!");
 	}
-
-
 
 }

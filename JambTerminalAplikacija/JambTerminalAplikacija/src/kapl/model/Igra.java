@@ -5,17 +5,18 @@ import java.util.Collections;
 
 public class Igra extends Entitet {
 
-	ArrayList<String> dolje= new ArrayList<String>(Collections.nCopies(16, " "));
-	ArrayList<String> gore= new ArrayList<String>(Collections.nCopies(16, " "));
-	ArrayList<String> sloboda= new ArrayList<String>(Collections.nCopies(16, " "));
-	ArrayList<String> najava= new ArrayList<String>(Collections.nCopies(16, " "));
-	ArrayList<String> rucno= new ArrayList<String>(Collections.nCopies(16, " "));
+	ArrayList<String> dolje = new ArrayList<String>(Collections.nCopies(16, " "));
+	ArrayList<String> gore = new ArrayList<String>(Collections.nCopies(16, " "));
+	ArrayList<String> sloboda = new ArrayList<String>(Collections.nCopies(16, " "));
+	ArrayList<String> najava = new ArrayList<String>(Collections.nCopies(16, " "));
+	ArrayList<String> rucno = new ArrayList<String>(Collections.nCopies(16, " "));
 
 	public Igra() {
 		super();
 	}
 
-	public Igra(int sifra, ArrayList<String> dolje, ArrayList<String> gore, ArrayList<String> sloboda, ArrayList<String> najava, ArrayList<String> rucno) {
+	public Igra(int sifra, ArrayList<String> dolje, ArrayList<String> gore, ArrayList<String> sloboda,
+			ArrayList<String> najava, ArrayList<String> rucno) {
 		super(sifra);
 		this.dolje = dolje;
 		this.gore = gore;
@@ -63,7 +64,5 @@ public class Igra extends Entitet {
 	public void setRucno(ArrayList<String> rucno) {
 		this.rucno = rucno;
 	}
-
-	
 
 }

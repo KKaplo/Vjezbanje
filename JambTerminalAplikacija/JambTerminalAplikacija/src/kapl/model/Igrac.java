@@ -3,15 +3,17 @@ package kapl.model;
 public class Igrac extends Entitet {
 	private String ime;
 	private String prezime;
+	private String korisnickoIme;
 
 	public Igrac() {
 		super();
 	}
 
-	public Igrac(int sifra, String ime, String prezime) {
+	public Igrac(int sifra, String ime, String prezime, String korisnickoIme) {
 		super(sifra);
 		this.ime = ime;
 		this.prezime = prezime;
+		this.korisnickoIme = korisnickoIme;
 
 	}
 
@@ -31,9 +33,17 @@ public class Igrac extends Entitet {
 		this.prezime = prezime;
 	}
 
+	public String getKorisnickoIme() {
+		return korisnickoIme;
+	}
+
+	public void setKorisnickoIme(String korisnickoIme) {
+		this.korisnickoIme = korisnickoIme;
+	}
+
 	@Override
 	public String toString() {
-		return (ime + " " + prezime);
+		return (korisnickoIme);
 	}
 
 }

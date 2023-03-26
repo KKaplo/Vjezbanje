@@ -1,10 +1,13 @@
 package kapl;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import kapl.model.Igra;
 
 public class Pomocno {
 
-	public static Scanner ulaz=new Scanner(System.in);
+	public static Scanner ulaz = new Scanner(System.in);
 
 	public static int unosBrojRaspon(String poruka, int min, int max) {
 		int i;
@@ -52,9 +55,10 @@ public class Pomocno {
 				System.out.println("Obavezan unos");
 				continue;
 			}
-			if ((str.equals("D")) || str.equals("G") || str.equals("S") || str.equals("N") || str.equals("R") ) {
-				
-				return str;
+			if ((str.equalsIgnoreCase("D")) || str.equalsIgnoreCase("G") || str.equalsIgnoreCase("S")
+					|| str.equalsIgnoreCase("N") || str.equalsIgnoreCase("R")) {
+
+				return str.toUpperCase();
 			}
 			System.out.println("-----------------------------------");
 			System.out.println("Ulaz je u krivome formatu\nUnos mora biti tipa (G/D/S/N/R) ");
@@ -72,16 +76,18 @@ public class Pomocno {
 				System.out.println("Obavezan unos");
 				continue;
 			}
-			if ((str.equals("1")) || (str.equals("2")) || (str.equals("3")) || (str.equals("4")) || (str.equals("5")) || (str.equals("6"))
-					 || (str.equals("MAX")) || (str.equals("MIN"))
-					 || (str.equals("2P")) || (str.equals("SK")) || (str.equals("FULL")) || (str.equals("POK")) || (str.equals("JAM"))) {
+			if ((str.equalsIgnoreCase("1")) || (str.equalsIgnoreCase("2")) || (str.equalsIgnoreCase("3"))
+					|| (str.equalsIgnoreCase("4")) || (str.equalsIgnoreCase("5")) || (str.equalsIgnoreCase("6"))
+					|| (str.equalsIgnoreCase("MAX")) || (str.equalsIgnoreCase("MIN")) || (str.equalsIgnoreCase("2P"))
+					|| (str.equalsIgnoreCase("SK")) || (str.equalsIgnoreCase("FUL")) || (str.equalsIgnoreCase("POK"))
+					|| (str.equalsIgnoreCase("JAM"))) {
 
-				return str;
+				return str.toUpperCase();
 			}
 			System.out.println("-----------------------------------");
 			System.out.println("Ulaz je u krivome formatu\nUnos mora biti (1/2/3/4/5/6/MAX/MIN/2P/SK/FUL/POK/JAM) ");
 			System.out.println("-----------------------------------");
-			
+
 		}
 
 	}
@@ -97,22 +103,80 @@ public class Pomocno {
 				continue;
 			}
 			try {
-				   vrijednost = Integer.parseInt(str);
-				}
-				catch (NumberFormatException e) {
-					vrijednost=-1;
-				}
-			if ((str.equals("X")) || (vrijednost>=0 && vrijednost<=80) ) {
+				vrijednost = Integer.parseInt(str);
+			} catch (NumberFormatException e) {
+				vrijednost = -1;
+			}
+			if ((str.equals("X")) || (vrijednost >= 0 && vrijednost <= 80)) {
 
 				return str;
 			}
-			
-				
+
 			System.out.println("-----------------------------------");
 			System.out.println("Ulaz je u krivome formatu\nUnos mora biti (X ili vrijednost između 0 i 80) ");
 			System.out.println("-----------------------------------");
-			
+
 		}
+	}
+
+	public static void racunanjeZbrojaKolone(ArrayList<String> kolona) {
+		int priv = 0;
+		for (int i = 0; i < 6; i++) {
+			priv += provjeriJeliBroj(kolona.get(i));
+		}
+		kolona.set(6, Integer.toString(priv));
+
+		// RACUNAJE MAX-MIN * broj jedinica
+		int max = provjeriJeliBroj(kolona.get(7));
+		int min = provjeriJeliBroj(kolona.get(8));
+		int jedinice = provjeriJeliBroj(kolona.get(0));
+
+		if (max > 0 && min > 0 && jedinice >= 0) {
+			kolona.set(9, Integer.toString((max - min) * jedinice));
+		} else {
+			kolona.set(9, Integer.toString(0));
+		}
+		priv = 0;
+		for (int i = 10; i < 15; i++) {
+			priv += provjeriJeliBroj(kolona.get(i));
+		}
+		kolona.set(15, Integer.toString(priv));
+	}
+
+	private static int provjeriJeliBroj(String string) {
+		int priv = 0;
+		try {
+			priv = Integer.parseInt(string);
+		} catch (NumberFormatException e) {
+			return 0;
+		}
+		return priv;
+	}
+
+	public static void dodavanjeZaProlazKolone(ArrayList<String> kolona) {
+		int zbroj = Integer.parseInt(kolona.get(6));
+		if (zbroj >= 60) {
+			zbroj += 30;
+			kolona.set(6, Integer.toString(zbroj));
+		}
+
+	}
+
+	public static int racunanjeRezultata(Igra igra) {
+		int rezultat = 0;
+		rezultat += provjeriJeliBroj(igra.getDolje().get(6)) + provjeriJeliBroj(igra.getGore().get(6))
+				+ provjeriJeliBroj(igra.getSloboda().get(6)) + provjeriJeliBroj(igra.getNajava().get(6))
+				+ provjeriJeliBroj(igra.getRucno().get(6));
+
+		rezultat += provjeriJeliBroj(igra.getDolje().get(9)) + provjeriJeliBroj(igra.getGore().get(9))
+				+ provjeriJeliBroj(igra.getSloboda().get(9)) + provjeriJeliBroj(igra.getNajava().get(9))
+				+ provjeriJeliBroj(igra.getRucno().get(9));
+
+		rezultat += provjeriJeliBroj(igra.getDolje().get(15)) + provjeriJeliBroj(igra.getGore().get(15))
+				+ provjeriJeliBroj(igra.getSloboda().get(15)) + provjeriJeliBroj(igra.getNajava().get(15))
+				+ provjeriJeliBroj(igra.getRucno().get(15));
+
+		return rezultat;
 	}
 
 }

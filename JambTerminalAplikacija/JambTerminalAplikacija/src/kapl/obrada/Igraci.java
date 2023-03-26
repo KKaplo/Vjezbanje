@@ -27,8 +27,8 @@ public class Igraci {
 	}
 
 	private void testPodatci() {
-		igraci.add(new Igrac(1,"Pero","Peric"));
-		igraci.add(new Igrac(2,"Ivo","Ivic"));
+		igraci.add(new Igrac(1,"Pero","Peric","Pera"));
+		igraci.add(new Igrac(2,"Ivo","Ivic","Ivo123"));
 		
 	}
 
@@ -88,6 +88,7 @@ public class Igraci {
 		i.setSifra(Pomocno.unosBrojRaspon("Unesi šifru igraca: ", 1, Integer.MAX_VALUE));
 		i.setIme(Pomocno.unosTeksta("Unesi ime igraca: "));
 		i.setPrezime(Pomocno.unosTeksta("Unesi prezime igraca: "));
+		i.setKorisnickoIme(Pomocno.unosTeksta("Unesi korisnicko ime igraca: "));
 		return i;
 	}
 

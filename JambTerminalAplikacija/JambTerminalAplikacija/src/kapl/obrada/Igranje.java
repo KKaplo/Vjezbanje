@@ -6,11 +6,13 @@ import java.util.List;
 import kapl.Pomocno;
 import kapl.Start;
 import kapl.model.Igra;
+import kapl.model.Igrac;
 
 public class Igranje {
 
 	private List<Igra> igranje;
 	private Start start;
+	private Igrac igrac;
 
 	public Igranje(Start start) {
 		super();
@@ -27,12 +29,16 @@ public class Igranje {
 	}
 
 	public void izbornik() {
-		System.out.println("");
+		Pomocno.CLS();
+		System.out.println("===============================");
 		System.out.println("IGRA IZBORNIK");
-		System.out.println("Dostupne opcije: ");
-		System.out.println("1. Nova tablica");
-		System.out.println("2. Upute za korištenje");
-		System.out.println("3. Povratak na glavni izbornik");
+		System.out.println("===============================");
+		System.out.println("    Dostupne opcije: ");
+		System.out.println("-------------------------------");
+		System.out.println("\t1. Nova tablica");
+		System.out.println("\t2. Upute za korištenje");
+		System.out.println("\t3. Povratak na glavni izbornik");
+		System.out.println("===============================\n");
 		odabirIzbornika();
 	}
 
@@ -40,12 +46,13 @@ public class Igranje {
 		switch (Pomocno.unosBrojRaspon("Odaberi opciju: ", 1, 4)) {
 
 		case 1:
+			igrac=unosKorisnika();
 			Igra igra = new Igra();
 			izbornikZaIgru(igra);
 			break;
 
 		case 2:
-			// ispisiUputeZaKoristenje();
+			ispisiUputeZaKoristenje();
 			izbornik();
 			break;
 
@@ -56,14 +63,47 @@ public class Igranje {
 
 	}
 
+	private void ispisiUputeZaKoristenje() {
+		Pomocno.CLS();
+		System.out.println("=======================================");
+		System.out.println("Upute jos nisu dodane");
+		System.out.println("=======================================");
+		Pomocno.Sacekaj();
+		
+	}
+
+	private Igrac unosKorisnika() {
+		Pomocno.CLS();
+		System.out.println("=======================================");
+		String korisnickoIme = Pomocno.unosTeksta("Unesi korisnicko ime igraca:\n=======================================\n");
+		for (Igrac igr : start.getIgraci().getIgraci()) {
+			if (korisnickoIme.equals(igr.getKorisnickoIme())) {
+				return igr;
+			}
+		}
+		Pomocno.CLS();
+		System.out.println("===============================================");
+		System.out.println("Ne postoji igrac sa unesenim korisnickim imenom");
+		System.out.println("Povratak na izbornik");
+		System.out.println("===============================================");
+		Pomocno.Sacekaj();
+		izbornik();
+		return null;
+
+	}
+
 	private void izbornikZaIgru(Igra igra) {
+		Pomocno.CLS();
 		System.out.println("");
+		System.out.println("===============================================");
 		System.out.println("ODABERI OPCIJU");
-		System.out.println("Dostupne opcije: ");
-		System.out.println("1. Novi unos polja");
-		System.out.println("2. Brisanje unosa");
-		System.out.println("3. Kraj igre");
-		System.out.println("---------------------------");
+		System.out.println("===============================================");
+		System.out.println("    Dostupne opcije: ");
+		System.out.println("-----------------------------------------------");
+		System.out.println("\t1. Novi unos polja");
+		System.out.println("\t2. Brisanje unosa");
+		System.out.println("\t3. Kraj igre");
+		System.out.println("===============================================\n");
 		igra = odabirIzbornikaZaIgru(igra);
 	}
 
@@ -71,10 +111,10 @@ public class Igranje {
 		switch (Pomocno.unosBrojRaspon("Odaberi opciju: ", 1, 3)) {
 
 		case 1:
-			igra = ispunjavanjeTablice(igra,false);
+			igra = ispunjavanjeTablice(igra, false);
 			izbornikZaIgru(igra);
 		case 2:
-			igra = ispunjavanjeTablice(igra,true);
+			igra = ispunjavanjeTablice(igra, true);
 			izbornikZaIgru(igra);
 
 		case 3:
@@ -93,6 +133,9 @@ public class Igranje {
 			System.out.println("===================================");
 
 			igranje.add(igra);
+			igrac.getRezultati().add(rezultat);
+			Pomocno.Sacekaj();
+			
 			izbornik();
 			break;
 		}
@@ -106,20 +149,18 @@ public class Igranje {
 		String vrijednost;
 		Pomocno.CLS();
 		ispisTablice(igra.getDolje(), igra.getGore(), igra.getSloboda(), igra.getNajava(), igra.getRucno());
-		if(brisanje) {
+		if (brisanje) {
 			System.out.println("Unosi polje za brisanje :\n--------------------------");
-		}
-		else {
+		} else {
 			System.out.println("Unos u polje:\n--------------------------");
 		}
 		kolona = Pomocno.unosDobreKolone();
 		redak = Pomocno.unosDobrogRetka();
-		
-		if(brisanje) {
-			vrijednost=" ";
-		}
-		else {
-		vrijednost = Pomocno.unosVrijednosti();
+
+		if (brisanje) {
+			vrijednost = " ";
+		} else {
+			vrijednost = Pomocno.unosVrijednosti();
 		}
 		switch (kolona) {
 		case "D":
@@ -147,6 +188,7 @@ public class Igranje {
 
 		Pomocno.CLS();
 		ispisTablice(igra.getDolje(), igra.getGore(), igra.getSloboda(), igra.getNajava(), igra.getRucno());
+		Pomocno.Sacekaj();
 
 		return igra;
 	}

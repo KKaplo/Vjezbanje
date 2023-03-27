@@ -1,19 +1,24 @@
 package kapl.model;
 
+import java.util.ArrayList;
+
 public class Igrac extends Entitet {
 	private String ime;
 	private String prezime;
 	private String korisnickoIme;
+	private ArrayList <Integer> rezultati;
 
 	public Igrac() {
 		super();
+		rezultati=new ArrayList<Integer>();
 	}
 
-	public Igrac(int sifra, String ime, String prezime, String korisnickoIme) {
+	public Igrac(int sifra, String ime, String prezime, String korisnickoIme,ArrayList <Integer> rezultati) {
 		super(sifra);
 		this.ime = ime;
 		this.prezime = prezime;
 		this.korisnickoIme = korisnickoIme;
+		this.rezultati=rezultati;
 
 	}
 
@@ -39,6 +44,14 @@ public class Igrac extends Entitet {
 
 	public void setKorisnickoIme(String korisnickoIme) {
 		this.korisnickoIme = korisnickoIme;
+	}
+
+	public ArrayList<Integer> getRezultati() {
+		return rezultati;
+	}
+
+	public void setRezultati(ArrayList<Integer> rezultati) {
+		this.rezultati = rezultati;
 	}
 
 	@Override

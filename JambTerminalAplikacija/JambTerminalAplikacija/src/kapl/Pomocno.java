@@ -8,6 +8,7 @@ import kapl.model.Igra;
 public class Pomocno {
 
 	public static Scanner ulaz = new Scanner(System.in);
+	private static Scanner sc;
 
 	public static int unosBrojRaspon(String poruka, int min, int max) {
 		int i;
@@ -16,12 +17,16 @@ public class Pomocno {
 				System.out.println(poruka);
 				i = Integer.parseInt(ulaz.nextLine());
 				if (i < min || i > max) {
+					System.out.println("=======================");
 					System.out.println("Broj mora biti između " + min + " i " + max);
+					System.out.println("=======================");
 					continue;
 				}
 				return i;
 			} catch (Exception e) {
+				System.out.println("=======================");
 				System.out.println("Niste unijeli broj");
+				System.out.println("=======================");
 			}
 		}
 
@@ -39,7 +44,9 @@ public class Pomocno {
 			System.out.println(poruka);
 			s = ulaz.nextLine();
 			if (s.trim().isEmpty()) {
+				System.out.println("=======================");
 				System.out.println("Obavezan unos");
+				System.out.println("=======================");
 				continue;
 			}
 			return s;
@@ -60,9 +67,9 @@ public class Pomocno {
 
 				return str.toUpperCase();
 			}
-			System.out.println("-----------------------------------");
+			System.out.println("===========================================================");
 			System.out.println("Ulaz je u krivome formatu\nUnos mora biti tipa (G/D/S/N/R) ");
-			System.out.println("-----------------------------------");
+			System.out.println("===========================================================");
 
 		}
 	}
@@ -73,7 +80,9 @@ public class Pomocno {
 			System.out.println("Unesi zeljenu redak(1/2/3/4/5/6/MAX/MIN/2P/SK/FUL/POK/JAM): ");
 			str = ulaz.nextLine();
 			if (str.trim().isEmpty()) {
+				System.out.println("=======================");
 				System.out.println("Obavezan unos");
+				System.out.println("=======================");
 				continue;
 			}
 			if ((str.equalsIgnoreCase("1")) || (str.equalsIgnoreCase("2")) || (str.equalsIgnoreCase("3"))
@@ -84,9 +93,9 @@ public class Pomocno {
 
 				return str.toUpperCase();
 			}
-			System.out.println("-----------------------------------");
+			System.out.println("===========================================================");
 			System.out.println("Ulaz je u krivome formatu\nUnos mora biti (1/2/3/4/5/6/MAX/MIN/2P/SK/FUL/POK/JAM) ");
-			System.out.println("-----------------------------------");
+			System.out.println("===========================================================");
 
 		}
 
@@ -99,7 +108,9 @@ public class Pomocno {
 			System.out.println("Unesi vrijednost ili X za krizanje polja: ");
 			str = ulaz.nextLine();
 			if (str.trim().isEmpty()) {
+				System.out.println("=======================");
 				System.out.println("Obavezan unos");
+				System.out.println("=======================");
 				continue;
 			}
 			try {
@@ -112,9 +123,9 @@ public class Pomocno {
 				return str;
 			}
 
-			System.out.println("-----------------------------------");
+			System.out.println("===========================================================================");
 			System.out.println("Ulaz je u krivome formatu\nUnos mora biti (X ili vrijednost između 0 i 80) ");
-			System.out.println("-----------------------------------");
+			System.out.println("===========================================================================");
 
 		}
 	}
@@ -154,7 +165,12 @@ public class Pomocno {
 	}
 
 	public static void dodavanjeZaProlazKolone(ArrayList<String> kolona) {
-		int zbroj = Integer.parseInt(kolona.get(6));
+		int zbroj = 0;
+		try {
+			zbroj = Integer.parseInt(kolona.get(6));
+		} catch (NumberFormatException e) {
+			return;
+		}
 		if (zbroj >= 60) {
 			zbroj += 30;
 			kolona.set(6, Integer.toString(zbroj));
@@ -177,6 +193,19 @@ public class Pomocno {
 				+ provjeriJeliBroj(igra.getRucno().get(15));
 
 		return rezultat;
+	}
+
+	public static void ispisRezultata(ArrayList<Integer> rezultati) {
+		for (int rezultat : rezultati) {
+			System.out.println(rezultat);
+		}
+
+	}
+
+	public static void Sacekaj() {
+		sc = new Scanner(System.in);
+		System.out.println("\nPritisni ENTER za nastavak\n");
+		sc.nextLine();
 	}
 
 }
